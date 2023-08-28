@@ -9,15 +9,41 @@ class News extends BaseController
 {
     public function index()
     {
+
+        helper(['date', 'array']);
+
+        $multiArray = [
+            'row1' => [
+                'subrow1' => ['hexlet' => 'otlichno'],
+                'subrow2' => ['A21', 'A22', 'A23'],
+                'subrow3' => ['A31', 'A32', 'A33'],
+            ],
+            'row2' => [
+                'subrow1' => ['B11', 'B12', 'B13'],
+                'red' => 'gray',
+                'subrow3' => ['B31', 'B32', 'B33'],
+            ],
+            'row3' => [
+                'subrow1' => ['C11', 'C12', 'C13'],
+                'subrow2' => ['C21', 'C22', 'C23'],
+                'subrow3' => ['C31', 'C32', 'C33'],
+            ],
+        ];
+
+        $array = [
+            'array' => $multiArray,
+        ];
+
         $model = model(NewsModel::class);
+        $db = getenv('database.default.database');
 
         $data = [
             'news'  => $model->getNews(),
-            'title' => 'News archive',
+            'title' => $db,
         ];
 
         return view('templates/header', $data)
-            . view('news/index')
+            . view('news/index', $array)
             . view('templates/footer');
     }
 
@@ -45,7 +71,7 @@ class News extends BaseController
         // Checks whether the form is submitted.
         if (! $this->request->is('post')) {
             // The form is not submitted, so returns the form.
-            return view('templates/header', ['title' => 'Create a news item'])
+            return view('templates/header')
                 . view('news/create')
                 . view('templates/footer');
         }
@@ -58,7 +84,7 @@ class News extends BaseController
             'body'  => 'required|max_length[5000]|min_length[10]',
         ])) {
             // The validation fails, so returns the form.
-            return view('templates/header', ['title' => 'Create a news item'])
+            return view('templates/header')
                 . view('news/create')
                 . view('templates/footer');
         }

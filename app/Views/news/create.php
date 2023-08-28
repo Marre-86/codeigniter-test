@@ -1,18 +1,22 @@
-<h2><?= esc($title) ?></h2>
-
 <?= session()->getFlashdata('error') ?>
 <?= validation_list_errors() ?>
 
-<form action="/news/create" method="post">
+<div class="col-md-3 ms-3">
+    <form action="/news/create" method="post">
     <?= csrf_field() ?>
-
-    <label for="title">Title</label>
-    <input type="input" name="title" value="<?= set_value('title') ?>">
-    <br>
-
-    <label for="body">Text</label>
-    <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
-    <br>
-
-    <input type="submit" name="submit" value="Create news item">
-</form>
+    <fieldset>
+        <legend>Create a news item</legend>
+        <div class="form-group">
+            <label for="title" class="form-label mt-4">Title</label>
+            <input type="text" class="form-control" name="title" id="title" value="<?= set_value('title') ?>">
+        </div>
+        <div class="form-group">
+            <label for="body" class="form-label mt-4">Text</label>
+            <textarea class="form-control" name="body" id="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
+        </div>
+        <div class="text-center mt-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </fieldset>
+    </form>
+</div>
